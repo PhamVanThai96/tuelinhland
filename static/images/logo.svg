@@ -1,0 +1,17 @@
+<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base shape - representing land/foundation -->
+  <path d="M5,35 L25,10 L45,35 L5,35" fill="#FFD700"/>
+  
+  <!-- Middle layer - representing growth -->
+  <path d="M10,30 L25,15 L40,30 L10,30" fill="#FF8C00"/>
+  
+  <!-- Top layer - representing prosperity -->
+  <path d="M15,25 L25,20 L35,25 L15,25" fill="#FFA500"/>
+  
+  <!-- Decorative element - sun/prosperity symbol -->
+  <circle cx="25" cy="18" r="3" fill="#FFD700"/>
+  
+  <!-- Abstract lines suggesting modern architecture -->
+  <line x1="25" y1="10" x2="25" y2="35" stroke="#FFF" stroke-width="0.5"/>
+  <line x1="15" y1="25" x2="35" y2="25" stroke="#FFF" stroke-width="0.5"/>
+</svg>
