@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Danh sách bất động sản - Tuệ Linh Real Estate{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header property-header-bg py-5 position-relative">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="fw-bold">Danh sách bất động sản</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'frontend:home' %}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Bất động sản</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="filter-section">
+    <div class="container">
+        <div class="card filter-card">
+            <div class="card-body">
+                <form method="GET" class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Loại hình</label>
+                        <select name="type" class="form-select">
+                            <option value="">Tất cả</option>
+                            {% for property_type in property_types %}
+                            <option value="{{ property_type.slug }}" {% if current_type == property_type.slug %}selected{% endif %}>
+                                {{ property_type.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label class="form-label">Thành phố</label>
+                        <input type="text" name="city" class="form-control" placeholder="Nhập thành phố" value="{{ current_city }}">
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label class="form-label">Khoảng giá</label>
+                        <select name="price_range" class="form-select">
+                            <option value="">Tất cả</option>
+                            <option value="0-1">Dưới 1 tỷ</option>
+                            <option value="1-3">1 - 3 tỷ</option>
+                            <option value="3-5">3 - 5 tỷ</option>
+                            <option value="5-10">5 - 10 tỷ</option>
+                            <option value="10">Trên 10 tỷ</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-warning w-100">
+                            <i class="fas fa-search me-2"></i>Tìm kiếm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Properties List -->
+<section class="properties-list py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3>Tìm thấy {{ properties.count }} bất động sản</h3>
+                    <div class="sort-options">
+                        <select class="form-select" onchange="sortProperties(this.value)">
+                            <option value="">Sắp xếp theo</option>
+                            <option value="price_asc">Giá tăng dần</option>
+                            <option value="price_desc">Giá giảm dần</option>
+                            <option value="area_asc">Diện tích tăng dần</option>
+                            <option value="area_desc">Diện tích giảm dần</option>
+                            <option value="newest">Mới nhất</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" id="properties-container">
+            {% for property in properties %}
+            <div class="col-lg-4 col-md-6 mb-4 property-item">
+                <div class="property-card card h-100 shadow-sm">
+                    <div class="property-image position-relative">
+                        {% if property.images.first %}
+                            <img src="{{ property.images.first.image.url }}" class="card-img-top" alt="{{ property.title }}">
+                        {% else %}
+                            <img src="{% static 'images/no-image.jpg' %}" class="card-img-top" alt="{{ property.title }}">
+                        {% endif %}
+                        
+                        {% if property.featured %}
+                        <span class="badge bg-warning position-absolute top-0 start-0 m-2">NỔI BẬT</span>
+                        {% endif %}
+                        
+                        <span class="badge bg-success position-absolute top-0 end-0 m-2">{{ property.get_status_display }}</span>
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ property.title }}</h5>
+                        <p class="card-text text-muted">
+                            <i class="fas fa-map-marker-alt me-1"></i>
+                            {{ property.address }}, {{ property.district }}
+                        </p>
+                        
+                        <div class="property-details d-flex justify-content-between mb-3">
+                            <small class="text-muted">
+                                <i class="fas fa-expand-arrows-alt me-1"></i>
+                                {{ property.area }}m²
+                            </small>
+                            <small class="text-muted">
+                                <i class="fas fa-bed me-1"></i>
+                                {{ property.bedrooms }} PN
+                            </small>
+                            <small class="text-muted">
+                                <i class="fas fa-bath me-1"></i>
+                                {{ property.bathrooms }} WC
+                            </small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price fw-bold text-warning fs-5">
+                                {{ property.price|floatformat:0 }} tỷ
+                            </span>
+                            <a href="{% url 'frontend:property-detail' property.pk %}" class="btn btn-outline-primary btn-sm">
+                                Xem chi tiết
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <div class="empty-state">
+                    <i class="fas fa-home fa-4x text-muted mb-3"></i>
+                    <h4 class="text-muted">Không tìm thấy bất động sản nào</h4>
+                    <p class="text-muted">Thử thay đổi bộ lọc hoặc tìm kiếm với từ khóa khác.</p>
+                    <a href="{% url 'frontend:property-list' %}" class="btn btn-warning">Xem tất cả</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination -->
+        {% if properties.has_other_pages %}
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if properties.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ properties.previous_page_number }}">Trước</a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for num in properties.paginator.page_range %}
+                        <li class="page-item {% if properties.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+                        
+                        {% if properties.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ properties.next_page_number }}">Sau</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function sortProperties(sortBy) {
+    if (!sortBy) return;
+    
+    const url = new URL(window.location);
+    url.searchParams.set('ordering', sortBy);
+    window.location.href = url.toString();
+}
+</script>
+{% endblock %}

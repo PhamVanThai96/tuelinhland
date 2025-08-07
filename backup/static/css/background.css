@@ -1,0 +1,78 @@
+/* Background Image Styles */
+.hero-background {
+    background-image: url('https://www.baltana.com/files/wallpapers-27/New-York-Central-Park-Background-Wallpaper-84567.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+
+.hero-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.hero-background .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Full page background option */
+.page-background {
+    background-image: url('https://www.baltana.com/files/wallpapers-27/New-York-Central-Park-Background-Wallpaper-84567.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.page-background::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: -1;
+}
+
+/* Property list header with background */
+.property-header-bg {
+    background-image: url('https://www.baltana.com/files/wallpapers-27/New-York-Central-Park-Background-Wallpaper-84567.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.property-header-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.property-header-bg .container {
+    position: relative;
+    z-index: 2;
+}
+
+.property-header-bg h1,
+.property-header-bg .breadcrumb a {
+    color: white;
+}
+
+.property-header-bg .breadcrumb-item.active {
+    color: #FFD700;
+}

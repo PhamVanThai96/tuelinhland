@@ -1,0 +1,90 @@
+.tuelinh-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-icon-container {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    box-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.logo-icon-container:hover {
+    transform: scale(1.05);
+}
+
+.logo-main-icon {
+    font-size: 24px;
+    color: #2c3e50;
+    position: relative;
+    z-index: 2;
+}
+
+.logo-accent {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 12px;
+    color: #e74c3c;
+    z-index: 3;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.logo-main-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.logo-sub-text {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .logo-icon-container {
+        width: 40px;
+        height: 40px;
+        margin-right: 8px;
+    }
+    
+    .logo-main-icon {
+        font-size: 20px;
+    }
+    
+    .logo-main-text {
+        font-size: 16px;
+    }
+    
+    .logo-sub-text {
+        font-size: 10px;
+    }
+}
+
+/* Animation for logo */
+@keyframes logoGlow {
+    0%, 100% { box-shadow: 0 3px 10px rgba(255, 215, 0, 0.3); }
+    50% { box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5); }
+}
+
+.logo-icon-container:hover {
+    animation: logoGlow 2s infinite;
+}

@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Liên hệ - TueLinh Real Estate{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="fw-bold">Liên hệ với chúng tôi</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'frontend:home' %}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Liên hệ</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-4">Gửi tin nhắn cho chúng tôi</h3>
+                        
+                        <form id="contactForm">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Họ và tên *</label>
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Số điện thoại *</label>
+                                    <input type="tel" class="form-control" name="phone" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Tin nhắn *</label>
+                                <textarea class="form-control" name="message" rows="5" required placeholder="Nhập tin nhắn của bạn..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-warning btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Gửi tin nhắn
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <!-- Contact Info -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Thông tin liên hệ</h4>
+                        
+                        <div class="contact-info">
+                            <div class="contact-item d-flex mb-3">
+                                <div class="contact-icon me-3">
+                                    <i class="fas fa-map-marker-alt text-warning fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Địa chỉ</h6>
+                                    <p class="text-muted mb-0">123 Đường ABC, Quận 1, TP.HCM</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item d-flex mb-3">
+                                <div class="contact-icon me-3">
+                                    <i class="fas fa-phone text-warning fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Điện thoại</h6>
+                                    <p class="text-muted mb-0">
+                                        <a href="tel:0123456789" class="text-decoration-none">0123.456.789</a>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item d-flex mb-3">
+                                <div class="contact-icon me-3">
+                                    <i class="fas fa-envelope text-warning fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Email</h6>
+                                    <p class="text-muted mb-0">
+                                        <a href="mailto:info@gotecland.com" class="text-decoration-none">info@gotecland.com</a>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item d-flex">
+                                <div class="contact-icon me-3">
+                                    <i class="fas fa-clock text-warning fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Giờ làm việc</h6>
+                                    <p class="text-muted mb-0">
+                                        Thứ 2 - Thứ 6: 8:00 - 18:00<br>
+                                        Thứ 7: 8:00 - 12:00<br>
+                                        Chủ nhật: Nghỉ
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Media -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Kết nối với chúng tôi</h5>
+                        
+                        <div class="social-media d-flex gap-2">
+                            <a href="#" class="btn btn-primary btn-lg flex-fill">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger btn-lg flex-fill">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="#" class="btn btn-info btn-lg flex-fill text-white">
+                                <i class="fab fa-zalo"></i>
+                            </a>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="newsletter">
+                            <h6 class="mb-3">Đăng ký nhận tin tức</h6>
+                            <form id="newsletterForm">
+                                <div class="input-group">
+                                    <input type="email" class="form-control" placeholder="Email của bạn" required>
+                                    <button class="btn btn-warning" type="submit">
+                                        <i class="fas fa-bell"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="map-section">
+    <div class="container-fluid p-0">
+        <div class="map-container" style="height: 400px;">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.632467887!2d106.69676481430283!3d10.762622292323026!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f40a3b49e59%3A0xa1bd14e0daf4e1d0!2zUXXhuq1uIDEsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1642567890123!5m2!1svi!2s" 
+                width="100%" 
+                height="400" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="fw-bold">Câu hỏi thường gặp</h2>
+                <p class="text-muted">Tìm hiểu các câu hỏi phổ biến về dịch vụ của chúng tôi</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                                Làm thế nào để đặt lịch xem nhà?
+                            </button>
+                        </h2>
+                        <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Bạn có thể đặt lịch xem nhà bằng cách gọi hotline 0123.456.789 hoặc điền form liên hệ trên website. Chúng tôi sẽ sắp xếp lịch hẹn phù hợp với thời gian của bạn.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                                Quy trình mua bán bất động sản như thế nào?
+                            </button>
+                        </h2>
+                        <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Quy trình gồm: Tư vấn nhu cầu → Xem nhà → Thương thảo giá → Ký hợp đồng đặt cọc → Thẩm định pháp lý → Ký hợp đồng chính thức → Thanh toán và bàn giao.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                                Có hỗ trợ vay vốn ngân hàng không?
+                            </button>
+                        </h2>
+                        <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Có, chúng tôi có hợp tác với nhiều ngân hàng để hỗ trợ khách hàng vay vốn với lãi suất ưu đãi và thủ tục nhanh chóng.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faq4">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                                Phí dịch vụ môi giới là bao nhiều?
+                            </button>
+                        </h2>
+                        <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Phí dịch vụ dao động từ 1-2% giá trị giao dịch tùy thuộc vào loại hình bất động sản và giá trị giao dịch. Chúng tôi cam kết tư vấn minh bạch về phí dịch vụ.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

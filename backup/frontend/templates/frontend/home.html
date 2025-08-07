@@ -1,0 +1,33 @@
+from django.shortcuts import render
+from rest_framework import generics, status
+from rest_framework.response import Response
+from .models import Contact, Newsletter
+from .serializers import ContactSerializer, NewsletterSerializer
+
+
+class ContactCreateView(generics.CreateAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response({
+            'message': 'Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.',
+            'data': serializer.data
+        }, status=status.HTTP_201_CREATED)
+
+
+class NewsletterCreateView(generics.CreateAPIView):
+    queryset = Newsletter.objects.all()
+    serializer_class = NewsletterSerializer
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response({
+            'message': 'Đăng ký nhận tin thành công!',
+            'data': serializer.data
+        }, status=status.HTTP_201_CREATED)

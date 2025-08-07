@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ property.title }} - TueLinh Real Estate{% endblock %}
+
+{% block content %}
+<!-- Property Gallery -->
+<section class="property-gallery py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                {% if property.images.all %}
+                <div class="main-gallery mb-3">
+                    <img src="{{ property.images.first.image.url }}" class="main-image w-100 rounded shadow" alt="{{ property.title }}">
+                </div>
+                
+                {% if property.images.count > 1 %}
+                <div class="thumbnail-gallery">
+                    <div class="row">
+                        {% for image in property.images.all %}
+                        <div class="col-2 mb-2">
+                            <img src="{{ image.image.url }}" class="thumbnail w-100 rounded {% if forloop.first %}active{% endif %}" alt="{{ image.caption }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                {% else %}
+                <img src="{% static 'images/no-image.jpg' %}" class="main-image w-100 rounded shadow" alt="{{ property.title }}">
+                {% endif %}
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="property-info-card card shadow-sm sticky-top" style="top: 100px;">
+                    <div class="card-body">
+                        <h3 class="card-title text-warning fw-bold mb-3">{{ property.price|floatformat:0 }} tỷ VNĐ</h3>
+                        
+                        <div class="property-quick-info">
+                            <div class="row text-center mb-3">
+                                <div class="col-4">
+                                    <div class="info-item">
+                                        <i class="fas fa-expand-arrows-alt text-warning fa-2x mb-2"></i>
+                                        <div class="fw-bold">{{ property.area }}m²</div>
+                                        <small class="text-muted">Diện tích</small>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="info-item">
+                                        <i class="fas fa-bed text-warning fa-2x mb-2"></i>
+                                        <div class="fw-bold">{{ property.bedrooms }}</div>
+                                        <small class="text-muted">Phòng ngủ</small>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="info-item">
+                                        <i class="fas fa-bath text-warning fa-2x mb-2"></i>
+                                        <div class="fw-bold">{{ property.bathrooms }}</div>
+                                        <small class="text-muted">Phòng tắm</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="contact-form">
+                            <h5 class="mb-3">Liên hệ ngay</h5>
+                            <form id="contactForm">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" name="name" placeholder="Họ và tên*" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="tel" class="form-control" name="phone" placeholder="Số điện thoại*" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" name="email" placeholder="Email">
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control" name="message" rows="3" placeholder="Tin nhắn">Tôi quan tâm đến {{ property.title }}</textarea>
+                                </div>
+                                <button type="submit" class="btn btn-warning w-100 fw-bold py-2">
+                                    <i class="fas fa-phone me-2"></i>LIÊN HỆ NGAY
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="hotline text-center">
+                            <a href="tel:0123456789" class="btn btn-outline-warning w-100">
+                                <i class="fas fa-phone-alt me-2"></i>Hotline: 0123.456.789
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Property Details -->
+<section class="property-details py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ property.title }}</h2>
+                        <p class="text-muted mb-3">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            {{ property.address }}, {{ property.ward }}, {{ property.district }}, {{ property.city }}
+                        </p>
+                        
+                        <div class="property-description">
+                            <h4>Mô tả chi tiết</h4>
+                            <div class="content">
+                                {{ property.description|linebreaks }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property Features -->
+                {% if property.propertyfeaturerelation_set.all %}
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Tiện ích nổi bật</h4>
+                        <div class="row">
+                            {% for relation in property.propertyfeaturerelation_set.all %}
+                            <div class="col-md-6 mb-2">
+                                <div class="feature-item d-flex align-items-center">
+                                    <i class="{{ relation.feature.icon|default:'fas fa-check' }} text-warning me-2"></i>
+                                    <span>{{ relation.feature.name }}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Map -->
+                {% if property.latitude and property.longitude %}
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Vị trí</h4>
+                        <div id="map" style="height: 400px; border-radius: 8px;"></div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="col-lg-4">
+                <!-- Property Info -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Thông tin chi tiết</h4>
+                        
+                        <table class="table table-borderless">
+                            <tr>
+                                <td class="text-muted">Loại hình:</td>
+                                <td class="fw-bold">{{ property.property_type.name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Diện tích:</td>
+                                <td class="fw-bold">{{ property.area }}m²</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Phòng ngủ:</td>
+                                <td class="fw-bold">{{ property.bedrooms }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Phòng tắm:</td>
+                                <td class="fw-bold">{{ property.bathrooms }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Trạng thái:</td>
+                                <td><span class="badge bg-success">{{ property.get_status_display }}</span></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Ngày đăng:</td>
+                                <td class="fw-bold">{{ property.created_at|date:"d/m/Y" }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Share -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Chia sẻ</h5>
+                        <div class="share-buttons d-flex gap-2">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                               target="_blank" class="btn btn-primary btn-sm">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="https://zalo.me/share?url={{ request.build_absolute_uri }}" 
+                               target="_blank" class="btn btn-info btn-sm text-white">
+                                <i class="fab fa-zalo"></i> Zalo
+                            </a>
+                            <button onclick="copyToClipboard()" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-copy"></i> Copy link
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Properties -->
+{% if related_properties %}
+<section class="related-properties py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <h3 class="fw-bold">Bất động sản liên quan</h3>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for property in related_properties %}
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="property-card card h-100 shadow-sm">
+                    <div class="property-image">
+                        {% if property.images.first %}
+                            <img src="{{ property.images.first.image.url }}" class="card-img-top" alt="{{ property.title }}">
+                        {% else %}
+                            <img src="{% static 'images/no-image.jpg' %}" class="card-img-top" alt="{{ property.title }}">
+                        {% endif %}
+                    </div>
+                    
+                    <div class="card-body">
+                        <h6 class="card-title">{{ property.title|truncatechars:50 }}</h6>
+                        <p class="card-text text-muted small">
+                            <i class="fas fa-map-marker-alt me-1"></i>
+                            {{ property.district }}
+                        </p>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price fw-bold text-warning">
+                                {{ property.price|floatformat:0 }} tỷ
+                            </span>
+                            <a href="{% url 'frontend:property-detail' property.pk %}" class="btn btn-outline-primary btn-sm">
+                                Xem
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{% if property.latitude and property.longitude %}
+<script>
+// Initialize map
+function initMap() {
+    const propertyLocation = { lat: {{ property.latitude }}, lng: {{ property.longitude }} };
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: propertyLocation,
+    });
+    const marker = new google.maps.Marker({
+        position: propertyLocation,
+        map: map,
+        title: "{{ property.title }}"
+    });
+}
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+{% endif %}
+
+<script>
+function copyToClipboard() {
+    navigator.clipboard.writeText(window.location.href).then(function() {
+        showAlert('Đã copy link vào clipboard!', 'success');
+    });
+}
+</script>
+{% endblock %}
