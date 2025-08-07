@@ -1,0 +1,61 @@
+.navbar {
+    padding: 1rem 0;
+}
+
+.navbar-brand img {
+    height: 50px;
+}
+
+.hero-section {
+    height: 100vh;
+    background-image: url('../images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10%;
+}
+
+.overlay {
+    color: white;
+}
+
+.highlight {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.contact-form {
+    background: #ffd700;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 400px;
+}
+
+.contact-form h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    margin-bottom: 1rem;
+}
+
+.btn-dark {
+    width: 100%;
+    padding: 0.75rem;
+}
+
+.contact-info {
+    font-weight: bold;
+}
+
+.why-choose-us img {
+    width: 100%;
+    height: auto;
+    min-height: 300px;
+    object-fit: cover;
+    background-color: #f8f9fa;
+}

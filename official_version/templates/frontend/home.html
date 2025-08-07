@@ -9,7 +9,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto text-center text-white">
-                <h1 class="display-4 fw-bold mb-4">Chào mừng đến với Tuệ Linh Land</h1>
+                <h1 class="hero-title fw-bold mb-2">Chào mừng đến với Tuệ Linh Land</h1>
+                <h2 class="slogan mb-4">NƠI <span class="highlight-text">ĐẤT VÀNG</span> VƯỢNG KHÍ</h2>
                 <p class="lead mb-4">Khám phá những dự án bất động sản cao cấp, đầu tư sinh lời bền vững cùng đội ngũ chuyên nghiệp hàng đầu Việt Nam.</p>
                 <div class="d-flex gap-3 justify-content-center flex-wrap">
                     <a href="{% url 'frontend:property-list' %}" class="btn btn-warning btn-lg px-4">
@@ -39,6 +40,7 @@
                                     <option value="apartment">Căn hộ</option>
                                     <option value="house">Nhà phố</option>
                                     <option value="villa">Biệt thự</option>
+                                    <option value="land">Đất nền</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -47,11 +49,10 @@
                             <div class="col-md-3">
                                 <select name="price_range" class="form-select">
                                     <option value="">Khoảng giá</option>
-                                    <option value="0-1">Dưới 1 tỷ</option>
-                                    <option value="1-3">1 - 3 tỷ</option>
-                                    <option value="3-5">3 - 5 tỷ</option>
-                                    <option value="5-10">5 - 10 tỷ</option>
-                                    <option value="10">Trên 10 tỷ</option>
+                                    <option value="1">Dưới 1 tỷ</option>
+                                    <option value="1-2">1 - 2 tỷ</option>
+                                    <option value="2-3">2 - 3 tỷ</option>
+                                    <option value="3+">Trên 3 tỷ</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -198,46 +199,44 @@
 </section>
 
 <!-- Why Choose Us -->
-<section class="why-choose-us py-5">
+<section class="why-choose-us py-5 bg-light">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-4">
-                <h2 class="fw-bold mb-4">TẠI SAO CHỌN GOTEC LAND?</h2>
-                <div class="feature-list">
-                    <div class="feature-item d-flex mb-3">
-                        <div class="feature-icon me-3">
-                            <i class="fas fa-check-circle text-warning fa-2x"></i>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 mb-4">
+                <div class="why-choose-panel p-5 bg-warning rounded-3 shadow-lg">
+                    <h2 class="fw-bold mb-4 text-center text-dark">TẠI SAO CHỌN TUỆ LINH LAND?</h2>
+                    <div class="feature-list bg-white p-4 rounded-3">
+                        <div class="feature-item d-flex mb-4 align-items-center hover-effect">
+                            <div class="feature-icon me-4">
+                                <i class="fas fa-check-circle text-warning fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-2">Kinh nghiệm 10+ năm</h5>
+                                <p class="text-muted mb-0">Với hơn 10 năm kinh nghiệm trong lĩnh vực bất động sản.</p>
+                            </div>
                         </div>
-                        <div>
-                            <h5>Kinh nghiệm 10+ năm</h5>
-                            <p class="text-muted">Với hơn 10 năm kinh nghiệm trong lĩnh vực bất động sản.</p>
+                        
+                        <div class="feature-item d-flex mb-4 align-items-center hover-effect">
+                            <div class="feature-icon me-4">
+                                <i class="fas fa-shield-alt text-warning fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-2">Uy tín & Tin cậy</h5>
+                                <p class="text-muted mb-0">Được hàng nghìn khách hàng tin tướng và lựa chọn.</p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="feature-item d-flex mb-3">
-                        <div class="feature-icon me-3">
-                            <i class="fas fa-shield-alt text-warning fa-2x"></i>
-                        </div>
-                        <div>
-                            <h5>Uy tín & Tin cậy</h5>
-                            <p class="text-muted">Được hàng nghìn khách hàng tin tướng và lựa chọn.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item d-flex mb-3">
-                        <div class="feature-icon me-3">
-                            <i class="fas fa-users text-warning fa-2x"></i>
-                        </div>
-                        <div>
-                            <h5>Đội ngũ chuyên nghiệp</h5>
-                            <p class="text-muted">Đội ngũ tư vấn viên giàu kinh nghiệm và nhiệt tình.</p>
+                        
+                        <div class="feature-item d-flex align-items-center hover-effect">
+                            <div class="feature-icon me-4">
+                                <i class="fas fa-users text-warning fa-2x"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-2">Đội ngũ chuyên nghiệp</h5>
+                                <p class="text-muted mb-0">Đội ngũ tư vấn viên giàu kinh nghiệm và nhiệt tình.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="col-lg-6">
-                <img src="{% static 'images/why-choose-us.jpg' %}" alt="Why choose us" class="img-fluid rounded shadow">
             </div>
         </div>
     </div>
