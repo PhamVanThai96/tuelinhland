@@ -1,0 +1,112 @@
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.search-panel {
+    position: relative;
+    z-index: 2;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.search-panel .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.search-panel .subtitle {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.search-panel h1 {
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.search-panel h2 {
+    color: #ffc107;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.search-panel .lead {
+    color: #666;
+    font-size: 1.25rem;
+}
+
+.search-form {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.search-form input,
+.search-form select {
+    border: 1px solid #ddd;
+    padding: 0.8rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.search-form .form-control,
+.search-form .form-select {
+    border: 1px solid #ddd;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.search-form .btn-submit {
+    background-color: #ffd700;
+    color: #000;
+    font-weight: bold;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.search-form .btn-submit:hover {
+    background-color: #ffed4a;
+}
+
+.search-form .btn-warning {
+    background: #ffc107;
+    border: none;
+    color: #000;
+    font-weight: 600;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.search-form .btn-warning:hover {
+    background: #ffca2c;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+}

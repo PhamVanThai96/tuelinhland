@@ -1,0 +1,47 @@
+/* Responsive Background Styles */
+@media (max-width: 768px) {
+    .hero-background {
+        background-attachment: scroll;
+        min-height: 60vh;
+    }
+    
+    .page-background {
+        background-attachment: scroll;
+    }
+    
+    .property-header-bg {
+        background-attachment: scroll;
+    }
+    
+    .hero-background h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-background .lead {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-background {
+        min-height: 50vh;
+    }
+    
+    .hero-background h1 {
+        font-size: 1.75rem;
+    }
+    
+    .hero-background .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* High resolution displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .hero-background,
+    .property-header-bg,
+    .page-background {
+        background-image: url('https://www.baltana.com/files/wallpapers-27/New-York-Central-Park-Background-Wallpaper-84567.jpg');
+    }
+}

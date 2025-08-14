@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ news.title }} - Tuệ Linh Land{% endblock %}
+
+{% block content %}
+<!-- Article Header -->
+<section class="article-header py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'frontend:home' %}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'news:list' %}">Tin tức</a></li>
+                        <li class="breadcrumb-item active">{{ news.title|truncatewords:5 }}</li>
+                    </ol>
+                </nav>
+                <h1 class="fw-bold mb-3">{{ news.title }}</h1>
+                <div class="article-meta d-flex flex-wrap align-items-center text-muted mb-4">
+                    <span class="me-3">
+                        <i class="fas fa-calendar me-1"></i>{{ news.published_at|date:"d/m/Y H:i" }}
+                    </span>
+                    <span class="me-3">
+                        <i class="fas fa-user me-1"></i>{{ news.author.get_full_name|default:news.author.username }}
+                    </span>
+                    <span class="me-3">
+                        <i class="fas fa-eye me-1"></i>{{ news.views_count }} lượt xem
+                    </span>
+                    <span class="badge bg-warning">{{ news.category.name }}</span>
+                </div>
+                {% if news.featured_image %}
+                <img src="{{ news.featured_image.url }}" class="img-fluid rounded shadow mb-4" alt="{{ news.title }}">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Article Content -->
+<section class="article-content py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="article-body">
+                    <div class="lead mb-4">{{ news.excerpt }}</div>
+                    <div class="content">{{ news.content|linebreaks }}</div>
+                </div>
+                
+                <!-- Tags -->
+                {% if tags %}
+                <div class="article-tags mt-5 pt-4 border-top">
+                    <h6 class="mb-3">Tags:</h6>
+                    {% for tag in tags %}
+                    <span class="badge bg-secondary me-2 mb-2">{{ tag.name }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <!-- Share Buttons -->
+                <div class="article-share mt-4 pt-4 border-top">
+                    <h6 class="mb-3">Chia sẻ bài viết:</h6>
+                    <div class="share-buttons">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                           class="btn btn-outline-primary btn-sm me-2" target="_blank">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ news.title }}" 
+                           class="btn btn-outline-info btn-sm me-2" target="_blank">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" 
+                           class="btn btn-outline-dark btn-sm me-2" target="_blank">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="sidebar">
+                    <!-- Related News -->
+                    {% if related_news %}
+                    <div class="related-news mb-5">
+                        <h5 class="fw-bold mb-3">Tin liên quan</h5>
+                        {% for related in related_news %}
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-4">
+                                    {% if related.featured_image %}
+                                    <img src="{{ related.featured_image.url }}" class="img-fluid rounded-start h-100" 
+                                         alt="{{ related.title }}" style="object-fit: cover;">
+                                    {% else %}
+                                    <div class="bg-warning rounded-start h-100 d-flex align-items-center justify-content-center">
+                                        <i class="fas fa-newspaper text-white"></i>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-8">
+                                    <div class="card-body p-2">
+                                        <h6 class="card-title mb-1">
+                                            <a href="{{ related.get_absolute_url }}" class="text-decoration-none">
+                                                {{ related.title|truncatewords:8 }}
+                                            </a>
+                                        </h6>
+                                        <small class="text-muted">
+                                            <i class="fas fa-calendar me-1"></i>{{ related.published_at|date:"d/m/Y" }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Contact Form -->
+                    <div class="contact-form-sidebar bg-warning p-4 rounded">
+                        <h5 class="fw-bold mb-3">Nhận tư vấn miễn phí</h5>
+                        <form id="sidebarContactForm">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <input type="text" name="name" class="form-control" placeholder="Họ và tên*" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại*" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" name="email" class="form-control" placeholder="Email">
+                            </div>
+                            <button type="submit" class="btn btn-dark w-100">Gửi yêu cầu</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('sidebarContactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = {
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        message: 'Yêu cầu tư vấn từ bài viết: {{ news.title }}'
+    };
+    
+    fetch('/api/contacts/contact/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+            this.reset();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Có lỗi xảy ra. Vui lòng thử lại!');
+    });
+});
+</script>
+{% endblock %}

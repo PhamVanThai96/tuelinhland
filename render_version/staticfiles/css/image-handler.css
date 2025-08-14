@@ -1,0 +1,209 @@
+/* 
+ * Image Handling CSS for TueLinh Real Estate
+ * Provides loading states, error handling, and animations for images
+ */
+
+/* Loading animation for images */
+.image-loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: imageLoading 1.5s infinite;
+    min-height: 100px;
+}
+
+@keyframes imageLoading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Image loaded state */
+.image-loaded {
+    animation: imageLoaded 0.3s ease-in-out;
+}
+
+@keyframes imageLoaded {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Error state for images */
+.image-error {
+    background-color: #f8f9fa !important;
+    border: 1px solid #dee2e6 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative;
+}
+
+.image-error::before {
+    content: "📷";
+    font-size: 2rem;
+    color: #6c757d;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.image-error::after {
+    content: "Không có hình ảnh";
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    color: #6c757d;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Property card image enhancements */
+.property-card .property-image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px 15px 0 0;
+}
+
+.property-card .property-image {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.property-card:hover .property-image {
+    transform: scale(1.05);
+}
+
+/* Gallery image styles */
+.main-image {
+    transition: opacity 0.3s ease;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.thumbnail {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    border-radius: 8px;
+}
+
+.thumbnail:hover {
+    border-color: #ffc107;
+    transform: scale(1.05);
+}
+
+.thumbnail.active {
+    border-color: #ffc107;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+}
+
+/* Responsive image containers */
+.property-image-container {
+    background-color: #f8f9fa;
+    position: relative;
+}
+
+/* Image aspect ratio maintenance */
+.image-aspect-16-9 {
+    aspect-ratio: 16/9;
+}
+
+.image-aspect-4-3 {
+    aspect-ratio: 4/3;
+}
+
+.image-aspect-1-1 {
+    aspect-ratio: 1/1;
+}
+
+/* Lazy loading placeholder */
+img[loading="lazy"]:not([src]) {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: imageLoading 1.5s infinite;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .property-card .property-image-container {
+        height: 200px !important;
+    }
+    
+    .main-image {
+        max-height: 250px;
+    }
+    
+    .thumbnail {
+        height: 50px !important;
+    }
+    
+    .image-error::before {
+        font-size: 1.5rem;
+    }
+    
+    .image-error::after {
+        font-size: 0.7rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .image-loading {
+        background: linear-gradient(90deg, #343a40 25%, #495057 50%, #343a40 75%);
+    }
+    
+    .image-error {
+        background-color: #343a40 !important;
+        border-color: #495057 !important;
+    }
+    
+    .image-error::before,
+    .image-error::after {
+        color: #adb5bd;
+    }
+}
+
+/* Print styles */
+@media print {
+    .image-loading,
+    .image-error {
+        background: #f8f9fa !important;
+    }
+    
+    .property-image,
+    .main-image {
+        break-inside: avoid;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .image-error {
+        border: 2px solid currentColor !important;
+    }
+    
+    .thumbnail {
+        border-width: 3px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .image-loading {
+        animation: none;
+        background: #f0f0f0;
+    }
+    
+    .property-image,
+    .main-image,
+    .thumbnail {
+        transition: none;
+    }
+    
+    .property-card:hover .property-image {
+        transform: none;
+    }
+}

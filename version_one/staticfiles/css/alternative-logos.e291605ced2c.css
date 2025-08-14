@@ -1,0 +1,57 @@
+/* Alternative Logo Design 1 - Building Focus */
+.logo-building {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.logo-building .logo-main-icon {
+    color: white;
+}
+
+.logo-building .logo-accent {
+    color: #f39c12;
+}
+
+/* Alternative Logo Design 2 - Luxury Focus */
+.logo-luxury {
+    background: linear-gradient(135deg, #8e44ad, #9b59b6);
+    border: 2px solid #FFD700;
+}
+
+.logo-luxury .logo-main-icon {
+    color: #FFD700;
+}
+
+.logo-luxury .logo-accent {
+    color: #e74c3c;
+}
+
+/* Alternative Logo Design 3 - Nature Focus */
+.logo-nature {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+}
+
+.logo-nature .logo-main-icon {
+    color: white;
+}
+
+.logo-nature .logo-accent {
+    color: #f1c40f;
+}
+
+/* Footer logo variation */
+.footer-logo {
+    filter: brightness(0.9);
+}
+
+.footer-logo .logo-icon-container {
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+}
+
+.footer-logo .logo-main-icon {
+    color: #FFD700;
+}
+
+.footer-logo .logo-main-text,
+.footer-logo .logo-sub-text {
+    color: white;
+}

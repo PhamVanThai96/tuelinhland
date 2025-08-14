@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TueLinh Real Estate - Bất động sản đầu tư{% endblock %}</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/logo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/background.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search-panel.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFD700;">
+            <div class="container">
+                <a class="navbar-brand tuelinh-logo" href="{% url 'frontend:home' %}">
+                    <div class="logo-icon-container">
+                        <i class="fas fa-home logo-main-icon"></i>
+                        <i class="fas fa-star logo-accent"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-main-text">Tuệ Linh Land</span>
+                        <span class="logo-sub-text">REAL ESTATE</span>
+                    </div>
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-medium" href="{% url 'frontend:home' %}">TRANG CHỦ</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark fw-medium" href="#" id="duAnDropdown" role="button" data-bs-toggle="dropdown">
+                                DỰ ÁN
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'frontend:property-list' %}">Tất cả dự án</a></li>
+                                <li><a class="dropdown-item" href="{% url 'frontend:property-list' %}?type=apartment">Căn hộ</a></li>
+                                <li><a class="dropdown-item" href="{% url 'frontend:property-list' %}?type=house">Nhà phố</a></li>
+                                <li><a class="dropdown-item" href="{% url 'frontend:property-list' %}?type=villa">Biệt thự</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-medium" href="#">DỰ ÁN ĐẤT NỀN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-medium" href="#">SHOPHOUSE</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-medium" href="#">DỰ ÁN BIỆT THỰ - RESORT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-medium" href="#">DỰ ÁN CHUNG CƯ CĂN HỘ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-medium" href="{% url 'news:list' %}">TIN TỨC</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-medium" href="{% url 'frontend:contact' %}">LIÊN HỆ</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="d-flex align-items-center">
+                        <span class="text-dark me-3">
+                            <i class="fas fa-phone me-1"></i>
+                            Hotline: <strong>0378.828.965</strong>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>Tuệ Linh Land</h5>
+                    <p>Công ty bất động sản hàng đầu Việt Nam, chuyên phát triển và phân phối các dự án bất động sản cao cấp.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-zalo"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Liên hệ</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i>108 Đường Cach Mang Thang 8, Phuong Ben Thanh, TP.HCM</li>
+                        <li><i class="fas fa-phone me-2"></i>0378.828.965</li>
+                        <li><i class="fas fa-envelope me-2"></i>info@tuelinhland.com</li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Đăng ký nhận tin</h5>
+                    <form id="newsletterForm">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Email của bạn" required>
+                            <button class="btn btn-warning" type="submit">Đăng ký</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2024 Tuệ Linh Land. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

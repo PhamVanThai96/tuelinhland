@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tin tức - Tuệ Linh Land{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header py-5" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{% static 'images/news-header.jpg' %}') center/cover;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center text-white">
+                <h1 class="display-4 fw-bold mb-3">Tin Tức Bất Động Sản</h1>
+                <p class="lead">Cập nhật thông tin mới nhất về thị trường bất động sản</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured News -->
+{% if featured_news %}
+<section class="featured-news py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Tin Nổi Bật</h2>
+        <div class="row">
+            {% for news in featured_news %}
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if news.featured_image %}
+                    <img src="{{ news.featured_image.url }}" class="card-img-top" alt="{{ news.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-warning d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-newspaper fa-3x text-white"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ news.title }}</h5>
+                        <p class="card-text text-muted">{{ news.excerpt|truncatewords:20 }}</p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>{{ news.published_at|date:"d/m/Y" }}
+                                <i class="fas fa-eye ms-3 me-1"></i>{{ news.views_count }}
+                            </small>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ news.get_absolute_url }}" class="btn btn-warning btn-sm">Đọc thêm</a>
+                        <span class="badge bg-secondary ms-2">{{ news.category.name }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Search and Filter -->
+<section class="search-filter py-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <form method="GET" class="d-flex">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Tìm kiếm tin tức..." value="{{ search_query }}">
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <select class="form-select" onchange="filterByCategory(this.value)">
+                    <option value="">Tất cả danh mục</option>
+                    {% for category in categories %}
+                    <option value="{{ category.slug }}" {% if selected_category == category.slug %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- News List -->
+<section class="news-list py-5">
+    <div class="container">
+        <div class="row">
+            {% for article in news %}
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            {% if article.featured_image %}
+                            <img src="{{ article.featured_image.url }}" class="img-fluid rounded-start h-100" alt="{{ article.title }}" style="object-fit: cover;">
+                            {% else %}
+                            <div class="bg-warning rounded-start h-100 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-newspaper fa-2x text-white"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ article.title }}</h5>
+                                <p class="card-text">{{ article.excerpt|truncatewords:15 }}</p>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>{{ article.published_at|date:"d/m/Y" }}
+                                        <span class="badge bg-secondary ms-2">{{ article.category.name }}</span>
+                                    </small>
+                                </p>
+                                <a href="{{ article.get_absolute_url }}" class="btn btn-warning btn-sm">Đọc thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">Không có tin tức nào được tìm thấy.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination -->
+        {% if news.has_other_pages %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if news.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ news.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}">Trước</a>
+                </li>
+                {% endif %}
+                
+                {% for num in news.paginator.page_range %}
+                {% if news.number == num %}
+                <li class="page-item active">
+                    <span class="page-link">{{ num }}</span>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}">{{ num }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                
+                {% if news.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ news.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}">Sau</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function filterByCategory(categorySlug) {
+    let url = new URL(window.location);
+    if (categorySlug) {
+        url.searchParams.set('category', categorySlug);
+    } else {
+        url.searchParams.delete('category');
+    }
+    url.searchParams.delete('page');
+    window.location = url;
+}
+</script>
+{% endblock %}

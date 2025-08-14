@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Trang chủ - Tuệ Linh Land{% endblock %}
+
+{% block content %}
+<!-- Hero Section with Background -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Left Content -->
+            <div class="col-lg-7 text-white">
+                <div class="hero-content">
+                    <h1 class="fw-bold mb-3">
+                        NƠI<br>
+                        <span style="color: #FFD700;">ĐẤT VÀNG</span><br>
+                        VƯỢNG KHÍ
+                    </h1>
+                    <p class="lead mb-4" style="font-size: 1.1rem; line-height: 1.6;">
+                        Khám phá những dự án bất động sản cao cấp, đầu tư sinh lời bền vững 
+                        cùng đội ngũ chuyên nghiệp hàng đầu Việt Nam.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="{% url 'frontend:property-list' %}" class="btn btn-warning btn-lg px-4">
+                            <i class="fas fa-search me-2"></i>Tìm bất động sản
+                        </a>
+                        <a href="{% url 'frontend:contact' %}" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fas fa-phone me-2"></i>Liên hệ tư vấn
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Contact Form -->
+            <div class="col-lg-5">
+                <div class="contact-form-card">
+                    <h3 class="mb-4">
+                        NHẬN TRỌN BỘ THÔNG<br>TIN DỰ ÁN
+                    </h3>
+                    <form id="contactForm" class="contact-form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="text" name="name" class="form-control form-control-lg" 
+                                   placeholder="Họ và Tên*" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="tel" name="phone" class="form-control form-control-lg" 
+                                   placeholder="Số điện thoại*" required>
+                        </div>
+                        <div class="mb-4">
+                            <input type="email" name="email" class="form-control form-control-lg" 
+                                   placeholder="Email/Viber (nếu có)">
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-lg w-100">
+                            GỬI ĐI
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Search Section -->
+<section class="quick-search py-5" style="background: #f8f9fa;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="search-card p-4" style="background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    <h3 class="text-center mb-4 fw-bold" style="color: #333;">Tìm kiếm dự án phù hợp</h3>
+                    <form method="GET" action="{% url 'frontend:property-list' %}" class="row g-3">
+                        <div class="col-md-3">
+                            <select name="type" class="form-select form-select-lg" style="border-radius: 10px;">
+                                <option value="">Loại hình</option>
+                                <option value="apartment">Căn hộ</option>
+                                <option value="house">Nhà phố</option>
+                                <option value="villa">Biệt thự</option>
+                                <option value="land">Đất nền</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" name="city" class="form-control form-control-lg" 
+                                   placeholder="Thành phố" style="border-radius: 10px;">
+                        </div>
+                        <div class="col-md-3">
+                            <select name="price_range" class="form-select form-select-lg" style="border-radius: 10px;">
+                                <option value="">Khoảng giá</option>
+                                <option value="1">Dưới 1 tỷ</option>
+                                <option value="1-2">1 - 2 tỷ</option>
+                                <option value="2-3">2 - 3 tỷ</option>
+                                <option value="3+">Trên 3 tỷ</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-warning btn-lg w-100" 
+                                    style="border-radius: 10px; font-weight: 600;">
+                                <i class="fas fa-search me-2"></i>Tìm kiếm
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Properties -->
+<section class="featured-properties py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title fw-bold">DỰ ÁN NỔI BẬT</h2>
+                <div class="title-underline mx-auto"></div>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for property in featured_properties %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card property-card h-100 shadow-sm">
+                    <div class="card-img-wrapper position-relative">
+                        {% if property.images.first %}
+                            <img src="{{ property.images.first.image.url }}" class="card-img-top" alt="{{ property.title }}">
+                        {% else %}
+                            <img src="{% static 'images/no-image.jpg' %}" class="card-img-top" alt="{{ property.title }}">
+                        {% endif %}
+                        
+                        {% if property.featured %}
+                        <span class="badge bg-warning position-absolute top-0 start-0 m-2">NỔI BẬT</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ property.title }}</h5>
+                        <p class="card-text text-muted">
+                            <i class="fas fa-map-marker-alt me-1"></i>
+                            {{ property.address }}, {{ property.district }}
+                        </p>
+                        
+                        <div class="property-details d-flex justify-content-between mb-3">
+                            <small class="text-muted">
+                                <i class="fas fa-expand-arrows-alt me-1"></i>
+                                {{ property.area }}m²
+                            </small>
+                            <small class="text-muted">
+                                <i class="fas fa-bed me-1"></i>
+                                {{ property.bedrooms }} PN
+                            </small>
+                            <small class="text-muted">
+                                <i class="fas fa-bath me-1"></i>
+                                {{ property.bathrooms }} WC
+                            </small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price fw-bold text-warning fs-5">
+                                {{ property.price|floatformat:0 }} tỷ
+                            </span>
+                            <a href="{% url 'frontend:property-detail' property.pk %}" class="btn btn-outline-primary btn-sm">
+                                Xem chi tiết
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">Chưa có dự án nào được đăng.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if featured_properties %}
+        <div class="text-center mt-4">
+            <a href="{% url 'frontend:property-list' %}" class="btn btn-warning btn-lg">
+                Xem tất cả dự án
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Services -->
+<section class="services bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title fw-bold">DỊCH VỤ CỦA CHÚNG TÔI</h2>
+                <div class="title-underline mx-auto"></div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="service-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-building fa-3x text-warning"></i>
+                    </div>
+                    <h5>Tư vấn đầu tư</h5>
+                    <p class="text-muted">Tư vấn chuyên nghiệp về các cơ hội đầu tư bất động sản sinh lời cao.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="service-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-handshake fa-3x text-warning"></i>
+                    </div>
+                    <h5>Môi giới BĐS</h5>
+                    <p class="text-muted">Dịch vụ môi giới mua bán, cho thuê bất động sản uy tín và chuyên nghiệp.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="service-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-file-contract fa-3x text-warning"></i>
+                    </div>
+                    <h5>Hỗ trợ pháp lý</h5>
+                    <p class="text-muted">Hỗ trợ đầy đủ các thủ tục pháp lý trong quá trình giao dịch.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="service-card text-center p-4 bg-white rounded shadow-sm h-100">
+                    <div class="service-icon mb-3">
+                        <i class="fas fa-chart-line fa-3x text-warning"></i>
+                    </div>
+                    <h5>Phân tích thị trường</h5>
+                    <p class="text-muted">Cung cấp báo cáo phân tích thị trường bất động sản chi tiết.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = {
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        message: 'Yêu cầu nhận thông tin dự án từ trang chủ'
+    };
+    
+    fetch('/api/contacts/contact/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+            this.reset();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Có lỗi xảy ra. Vui lòng thử lại!');
+    });
+});
+</script>
+{% endblock %}
